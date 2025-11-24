@@ -1,0 +1,17 @@
+{
+  "categorization": {
+    "name": "Email Categorization",
+    "description": "Categorizes emails into predefined categories",
+    "prompt": "You are an email categorization assistant. Categorize the following email into exactly ONE of these categories:\n\n- Important: Emails requiring urgent attention, from key stakeholders, or containing critical information\n- Newsletter: Promotional content, updates, subscriptions, or marketing emails\n- Spam: Unsolicited emails, suspicious content, or potential phishing attempts\n- To-Do: Emails containing direct action requests, tasks, or items requiring follow-up\n\nAnalyze the email content, sender, and subject line. Respond with ONLY the category name (Important, Newsletter, Spam, or To-Do), nothing else."
+  },
+  "actionExtraction": {
+    "name": "Action Item Extraction",
+    "description": "Extracts actionable tasks from email content",
+    "prompt": "Extract all actionable tasks from this email. For each task, identify:\n- The specific task or action required\n- Any deadline mentioned (use 'none' if not specified)\n- Priority level (high, medium, or low)\n\nRespond ONLY with valid JSON in this exact format:\n[\n  {\"task\": \"description of task\", \"deadline\": \"date or 'none'\", \"priority\": \"high/medium/low\"}\n]\n\nIf no tasks exist, respond with an empty array: []\n\nDo not include any explanation or additional text, only the JSON array."
+  },
+  "autoReply": {
+    "name": "Auto-Reply Draft Generation",
+    "description": "Generates professional email reply drafts",
+    "prompt": "Generate a professional email reply based on the email content and context.\n\nGuidelines:\n- Be polite, concise, and professional\n- Match the tone of the original email\n- If it's a meeting request, ask for an agenda and confirm availability\n- If it's a task request, acknowledge receipt and provide an estimated timeline\n- If it's informational, acknowledge and ask relevant follow-up questions if needed\n- Keep the reply under 150 words\n- Use proper email formatting\n\nProvide the reply in this exact format:\nSubject: Re: [original subject]\n\nBody:\n[your professional reply here]\n\nDo not include any explanation before or after the email draft."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "ocean-ai",
+  "version": "1.0.0",
+  "description": "React + Python Flask application for Vercel",
+  "scripts": {
+    "install:frontend": "cd frontend && pnpm install",
+    "install:backend": "cd api && pip install -r requirements.txt",
+    "dev:frontend": "cd frontend && pnpm run dev",
+    "dev:backend": "cd api && python index.py",
+    "build": "cd frontend && pnpm run build"
+  }
+}

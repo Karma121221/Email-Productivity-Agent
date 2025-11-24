@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode color scheme */
+    --color-important: #fecaca;
+    --color-important-text: #dc2626;
+    --color-important-border: #ef4444;
+    
+    --color-todo: #bbf7d0;
+    --color-todo-text: #16a34a;
+    --color-todo-border: #22c55e;
+    
+    --color-newsletter: #bfdbfe;
+    --color-newsletter-text: #2563eb;
+    --color-newsletter-border: #3b82f6;
+    
+    --color-spam: #fed7aa;
+    --color-spam-text: #ea580c;
+    --color-spam-border: #fb923c;
+  }
+}
+
+@layer components {
+  /* Category Badge Styles */
+  .badge-important {
+    @apply bg-red-100 text-red-700 border-red-300;
+  }
+  
+  .badge-todo {
+    @apply bg-green-100 text-green-700 border-green-300;
+  }
+  
+  .badge-newsletter {
+    @apply bg-blue-100 text-blue-700 border-blue-300;
+  }
+  
+  .badge-spam {
+    @apply bg-orange-100 text-orange-700 border-orange-300;
+  }
+  
+  /* Tab Header Backgrounds */
+  .tab-header-inbox {
+    @apply bg-blue-50;
+  }
+  
+  .tab-header-prompts {
+    @apply bg-purple-50;
+  }
+  
+  .tab-header-chat {
+    @apply bg-green-50;
+  }
+  
+  .tab-header-drafts {
+    @apply bg-orange-50;
+  }
+  
+  /* Email Card Category Borders */
+  .email-card-important {
+    @apply border-l-4 border-l-red-400;
+  }
+  
+  .email-card-todo {
+    @apply border-l-4 border-l-green-400;
+  }
+  
+  .email-card-newsletter {
+    @apply border-l-4 border-l-blue-400;
+  }
+  
+  .email-card-spam {
+    @apply border-l-4 border-l-orange-400;
+  }
+  
+  /* Chat Message Bubbles */
+  .chat-bubble-user {
+    @apply bg-blue-100 border-blue-200;
+  }
+  
+  .chat-bubble-assistant {
+    @apply bg-gray-100 border-gray-200;
+  }
+  
+  /* Draft Cards */
+  .draft-card {
+    @apply bg-slate-50 hover:bg-slate-100;
+  }
+  
+  /* Prompt Cards */
+  .prompt-card {
+    @apply bg-white border-purple-200;
+  }
+}
