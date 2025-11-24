@@ -207,7 +207,7 @@ export default function DraftsTab() {
         {/* Draft Editor */}
         <div className="md:col-span-2">
           {selectedDraft ? (
-            <Card className="h-full flex flex-col">
+            <Card className="h-full flex flex-col bg-gray-50">
               <CardHeader>
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -244,6 +244,14 @@ export default function DraftsTab() {
                     ) : (
                       <>
                         <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => handleDelete(selectedDraft.id)}
+                        >
+                          <Trash2 className="h-4 w-4 mr-1" />
+                          Delete
+                        </Button>
+                        <Button
                           variant="outline"
                           size="sm"
                           onClick={handleEdit}
@@ -252,12 +260,12 @@ export default function DraftsTab() {
                           Edit
                         </Button>
                         <Button
-                          variant="destructive"
+                          variant="ghost"
                           size="sm"
-                          onClick={() => handleDelete(selectedDraft.id)}
+                          onClick={() => setSelectedDraft(null)}
                         >
-                          <Trash2 className="h-4 w-4 mr-1" />
-                          Delete
+                          <X className="h-4 w-4 mr-1" />
+                          Close
                         </Button>
                       </>
                     )}

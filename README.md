@@ -1369,71 +1369,75 @@ ChatTab.jsx:
 
 ### Vercel Deployment (Recommended)
 
-#### Prerequisites
+✅ **Your project is now fully configured for Vercel deployment!**
 
-1. **Vercel Account** (free tier available)
-   - Sign up: https://vercel.com/signup
+See the complete deployment guide: **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**
 
-2. **Vercel CLI**
-   ```bash
-   npm install -g vercel
+#### Quick Start
+
+1. **Push to GitHub**
+   ```powershell
+   git add .
+   git commit -m "Configure for Vercel deployment"
+   git push origin main
    ```
 
-#### Deployment Steps
+2. **Deploy on Vercel Dashboard**
+   - Go to [vercel.com](https://vercel.com)
+   - Click "Add New Project"
+   - Import your GitHub repository
+   - Configure project settings (see full guide)
+   - **IMPORTANT:** Add environment variables:
+     - `GEMINI_API_KEY` = your API key
+     - `MOCK_LLM` = false
+   - Click "Deploy"
 
-**Step 1: Login to Vercel**
-```bash
-vercel login
-```
+3. **Access Your App**
+   ```
+   https://your-app-name.vercel.app
+   ```
 
-**Step 2: Deploy from Root Directory**
-```bash
-cd "Ocean AI"
-vercel
-```
+#### What's Already Configured ✅
 
-**Interactive Prompts:**
-```
-? Set up and deploy "Ocean AI"? Y
-? Which scope? Your Account
-? Link to existing project? N
-? What's your project's name? ocean-ai-email-agent
-? In which directory is your code located? ./
-```
+- **Python Backend:** `api/index.py` with Flask app
+- **React Frontend:** Vite build to `frontend/dist`
+- **Routing:** API requests to `/api/*` handled by Flask
+- **Dependencies:** `requirements.txt` and `package.json`
+- **Build Configuration:** `vercel.json` properly configured
+- **Environment Variables:** Template in `.env` file
 
-**Step 3: Configure Environment Variables**
-
-In Vercel Dashboard:
-1. Go to your project
-2. Settings → Environment Variables
-3. Add: `GEMINI_API_KEY` = `your_actual_api_key`
-4. Add: `MOCK_LLM` = `false`
-
-**Step 4: Redeploy**
-```bash
-vercel --prod
-```
-
-**Step 5: Access Your App**
-```
-https://ocean-ai-email-agent.vercel.app
-```
-
-#### How Vercel Works
+#### How It Works
 
 **Frontend Build:**
-- Runs `cd frontend && pnpm install && pnpm build`
+- Vercel runs: `cd frontend && pnpm install && pnpm run build`
 - Outputs static files to `frontend/dist/`
-- Serves as static assets
+- Serves as CDN-cached static assets
 
 **Backend (Serverless Functions):**
-- Each route in `api/index.py` becomes a serverless function
-- Auto-scales on demand
+- Flask app at `api/index.py` becomes serverless functions
+- Each API route auto-scales independently
+- Python 3.12 runtime (Vercel default)
 - Cold start: ~1-2 seconds
 
 **Routing:**
-- `vercel.json` configures `/api/*` → serverless functions
-- All other routes → frontend static files
+- `/api/*` → Flask serverless functions
+- `/*` → React frontend static files
+
+#### Deployment Options
+
+**Option 1: Vercel Dashboard (Recommended)**
+- Most user-friendly
+- Visual interface for settings
+- Automatic deployments on push
+
+**Option 2: Vercel CLI**
+```powershell
+npm install -g vercel
+vercel login
+vercel
+```
+
+See **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** for complete instructions, troubleshooting, and post-deployment checklist.
 
 ---
 

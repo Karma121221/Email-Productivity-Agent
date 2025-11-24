@@ -14,7 +14,7 @@ export default function PromptCard({
   onReset 
 }) {
   return (
-    <Card>
+    <Card className="bg-gray-50">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex-1">

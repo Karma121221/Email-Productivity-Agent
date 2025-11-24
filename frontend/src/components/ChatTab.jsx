@@ -166,7 +166,7 @@ export default function ChatTab() {
 
         {/* Selected Email Context */}
         {selectedEmail && (
-          <div className="px-6 py-3 bg-accent/30 border-b">
+          <div className="px-6 py-3 bg-blue-100/60 border-b">
             <div className="flex items-center justify-between gap-2 text-sm">
               <div className="flex items-center gap-2">
                 <Badge variant="outline">Context</Badge>
@@ -190,7 +190,7 @@ export default function ChatTab() {
         )}
 
         {/* Messages Area */}
-        <div className="flex-1 overflow-y-auto px-6 py-4">
+        <div className="flex-1 overflow-y-auto px-6 py-4 bg-gray-50">
           {chatMessages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center">
               <Bot className="h-16 w-16 text-muted-foreground mb-4" />

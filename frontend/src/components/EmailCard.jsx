@@ -44,7 +44,7 @@ export default function EmailCard({ email, isSelected, onClick }) {
       onClick={onClick}
       className={cn(
         'p-4 cursor-pointer transition-all hover:shadow-md border-l-4',
-        getCardBorderClass(email.category),
+        isSelected ? getCardBorderClass(email.category) : 'border-l-gray-400',
         isSelected && 'bg-blue-50/50',
         !email.isRead && 'bg-gray-50'
       )}
@@ -52,24 +52,24 @@ export default function EmailCard({ email, isSelected, onClick }) {
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className={cn(
-              'font-semibold truncate',
-              !email.isRead && 'font-bold'
+            <h3 className={cn(
+              'text-sm truncate',
+              !email.isRead ? 'font-bold' : 'font-semibold'
             )}>
-              {email.senderName}
-            </span>
+              {email.subject}
+            </h3>
             {email.category && (
               <Badge className={cn("shrink-0 border", getCategoryClass(email.category))}>
                 {email.category}
               </Badge>
             )}
           </div>
-          <h3 className={cn(
-            'text-sm truncate',
-            !email.isRead ? 'font-semibold' : 'font-medium'
+          <span className={cn(
+            'text-sm text-muted-foreground truncate',
+            !email.isRead && 'font-medium'
           )}>
-            {email.subject}
-          </h3>
+            From: {email.senderName}
+          </span>
         </div>
         <span className="text-xs text-muted-foreground shrink-0">
           {getRelativeTime(email.timestamp)}

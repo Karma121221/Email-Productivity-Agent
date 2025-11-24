@@ -48,17 +48,17 @@ export default function EmailDetail({ email }) {
 
   return (
     <div className="h-full flex flex-col">
-      <Card className="flex-1 flex flex-col">
+      <Card className="flex-1 flex flex-col bg-gray-50">
         <CardHeader>
           <div className="flex items-start justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-2xl mb-2">{email.subject}</CardTitle>
-              <CardDescription className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
+              <CardTitle className="text-2xl mb-3">{email.subject}</CardTitle>
+              <CardDescription className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 bg-gray-100/80 px-3 py-2 rounded-md w-fit">
                   <span className="font-semibold">{email.senderName}</span>
                   <span className="text-muted-foreground">&lt;{email.sender}&gt;</span>
                 </div>
-                <span className="text-xs">{formatDate(email.timestamp)}</span>
+                <span className="text-xs bg-gray-100/80 px-3 py-1.5 rounded-md w-fit">{formatDate(email.timestamp)}</span>
               </CardDescription>
             </div>
             <div className="flex flex-col gap-2 shrink-0">
@@ -97,7 +97,7 @@ export default function EmailDetail({ email }) {
           )}
 
           {email.actionItems && email.actionItems.length > 0 && (
-            <div className="mt-6">
+            <div className="mt-6 bg-blue-100/70 p-4 rounded-lg">
               <Accordion type="single" collapsible defaultValue="action-items">
                 <AccordionItem value="action-items">
                   <AccordionTrigger className="text-sm font-semibold flex items-center gap-2">
