@@ -1,5 +1,3 @@
-// Main application component with tab-based navigation and state management
-
 import { useEffect } from 'react';
 import { useToast } from '@/contexts/ToastContext';
 import useStore from './store/useStore';
@@ -27,7 +25,6 @@ function App() {
       try {
         const response = await fetch('/api/data/default_prompts.json');
         const data = await response.json();
-        // Store full prompt objects (name, description, prompt)
         useStore.setState({ prompts: data });
       } catch (error) {
         console.error('Failed to load default prompts:', error);
@@ -41,7 +38,6 @@ function App() {
     setIsProcessingEmails(true);
     
     try {
-      // Call backend API to process emails with LLM
       const response = await fetch('/api/emails/process', {
         method: 'POST',
         headers: {
@@ -60,7 +56,6 @@ function App() {
       const data = await response.json();
 
       if (data.success) {
-        // Update each email with category and action items
         data.results.forEach((result) => {
           if (result.category) {
             updateEmailCategory(result.id, result.category);
@@ -76,7 +71,6 @@ function App() {
             : 'All emails categorized successfully',
         });
 
-        // Show errors if any
         if (data.errors && data.errors.length > 0) {
           console.warn('Processing errors:', data.errors);
         }

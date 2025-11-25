@@ -19,7 +19,6 @@ export default function PromptsTab() {
   });
   const [isSaving, setIsSaving] = useState(false);
 
-  // Load from localStorage on mount only
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
@@ -31,17 +30,15 @@ export default function PromptsTab() {
         toast.error('Failed to load saved prompts');
       }
     }
-  }, []); // Run once on mount
+  }, []);
 
-  // Sync with Zustand prompts when they load (only if no localStorage)
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (!stored && prompts && Object.keys(prompts).length > 0) {
       setEditedPrompts(prompts);
     }
-  }, [prompts]); // Only re-run when prompts from API change
+  }, [prompts]);
 
-  // Handle prompt text change
   const handlePromptChange = (promptType, value) => {
     setEditedPrompts((prev) => ({
       ...prev,
@@ -52,15 +49,12 @@ export default function PromptsTab() {
     }));
   };
 
-  // Save all prompts to localStorage and Zustand
   const handleSaveAll = async () => {
     try {
       setIsSaving(true);
       
-      // Save to localStorage
       localStorage.setItem(STORAGE_KEY, JSON.stringify(editedPrompts));
       
-      // Update Zustand store
       setPrompts(editedPrompts);
       
       toast.success('All prompts saved successfully!');
@@ -72,10 +66,8 @@ export default function PromptsTab() {
     }
   };
 
-  // Reset individual prompt to default
   const handleResetPrompt = async (promptType) => {
     try {
-      // Fetch default from API
       const response = await fetch('/api/data/default_prompts.json');
       if (!response.ok) throw new Error('Failed to load defaults');
       
@@ -93,21 +85,17 @@ export default function PromptsTab() {
     }
   };
 
-  // Reset all prompts to defaults
   const handleResetAll = async () => {
     try {
       setIsSaving(true);
       
-      // Fetch defaults from API
       const response = await fetch('/api/data/default_prompts.json');
       if (!response.ok) throw new Error('Failed to load defaults');
       
       const defaults = await response.json();
       
-      // Clear localStorage
       localStorage.removeItem(STORAGE_KEY);
       
-      // Update state
       setEditedPrompts(defaults);
       setPrompts(defaults);
       
@@ -123,7 +111,6 @@ export default function PromptsTab() {
   return (
     <TabsContent value="prompts" className="mt-0">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold mb-2">Configure AI Prompts</h2>
           <p className="text-muted-foreground">
@@ -132,7 +119,6 @@ export default function PromptsTab() {
           </p>
         </div>
 
-        {/* Prompt Cards */}
         <div className="space-y-6">
           <PromptCard
             promptType="categorization"
@@ -164,7 +150,6 @@ export default function PromptsTab() {
 
         <Separator className="my-8" />
 
-        {/* Action Buttons */}
         <div className="flex items-center justify-between">
           <Button
             variant="outline"
@@ -185,7 +170,6 @@ export default function PromptsTab() {
           </Button>
         </div>
 
-        {/* Help Text */}
         <div className="mt-6 p-4 bg-muted/50 rounded-lg">
           <p className="text-sm text-muted-foreground">
             <strong>💡 Tip:</strong> Prompts are stored locally in your browser. 

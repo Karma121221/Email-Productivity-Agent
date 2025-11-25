@@ -26,7 +26,6 @@ export function ToastProvider({ children }) {
 
     setToasts((prev) => [...prev, toast]);
 
-    // Auto-dismiss after duration
     if (duration > 0) {
       setTimeout(() => {
         removeToast(id);

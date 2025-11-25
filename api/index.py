@@ -82,7 +82,6 @@ def process_emails():
         if not emails:
             return jsonify({'success': False, 'error': 'No emails provided'}), 400
         
-        # Process emails using LLM service
         result = process_emails_batch(emails, prompts)
         
         return jsonify(result)
@@ -118,15 +117,12 @@ def chat_query():
         emails = data.get('emails', [])
         prompts = data.get('prompts', {})
         
-        # Get specific email if ID provided
         email = None
         if email_id and emails:
             email = next((e for e in emails if e.get('id') == email_id), None)
         
-        # Process query
         result = process_chat_query(query, email, emails, prompts)
         
-        # If a draft was generated, save it
         if result.get('draft'):
             draft = result['draft']
             _save_draft(draft)
@@ -190,10 +186,8 @@ def delete_draft(draft_id):
         else:
             drafts = []
         
-        # Filter out the draft to delete
         drafts = [d for d in drafts if d.get('id') != draft_id]
         
-        # Save updated drafts
         with open(DRAFTS_FILE, 'w', encoding='utf-8') as f:
             json.dump(drafts, f, indent=2)
         
@@ -213,7 +207,6 @@ def _save_draft(draft):
     else:
         drafts = []
     
-    # Check if draft already exists (by ID) and update it
     existing_index = next((i for i, d in enumerate(drafts) if d.get('id') == draft.get('id')), None)
     
     if existing_index is not None:
@@ -221,7 +214,6 @@ def _save_draft(draft):
     else:
         drafts.append(draft)
     
-    # Save to file
     with open(DRAFTS_FILE, 'w', encoding='utf-8') as f:
         json.dump(drafts, f, indent=2)
 

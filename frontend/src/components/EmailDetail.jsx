@@ -10,8 +10,6 @@ export default function EmailDetail({ email }) {
   const { setActiveTab } = useStore();
 
   const handleGenerateReply = () => {
-    // Store the query intent and switch to chat tab
-    // The ChatTab will pick this up and auto-send
     sessionStorage.setItem('autoSendQuery', 'Draft a reply to this email');
     setActiveTab('chat');
   };

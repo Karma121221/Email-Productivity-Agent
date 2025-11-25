@@ -40,8 +40,6 @@ def process_chat_query(
     }
     
     try:
-        # Route 1: Draft a reply (HIGHEST PRIORITY - check first!)
-        # More specific patterns to avoid false positives
         draft_keywords = ['draft', 'reply', 'respond', 'write back', 'compose', 'generate reply']
         if any(keyword in query_lower for keyword in draft_keywords):
             if not email:
@@ -55,7 +53,6 @@ def process_chat_query(
             result['success'] = True
             return result
         
-        # Route 2: Summarize email
         if any(word in query_lower for word in ['summarize', 'summary', 'tldr', 'brief']):
             if not email:
                 result['response'] = "Please select an email first to summarize it."
@@ -67,12 +64,9 @@ def process_chat_query(
             result['success'] = True
             return result
         
-        # Route 3: Show tasks/action items (check with more specificity)
-        # Only trigger if explicitly asking about tasks, not if "action" appears in email content
         task_keywords = ['what tasks', 'show tasks', 'list tasks', 'action items', 'to-do', 'need to do', 'what do i need']
         if any(keyword in query_lower for keyword in task_keywords):
             if email:
-                # Show tasks for specific email
                 action_items = email.get('actionItems', [])
                 if action_items:
                     tasks_text = "\n".join([
@@ -85,7 +79,6 @@ def process_chat_query(
                 else:
                     result['response'] = "No action items found in this email."
             elif emails:
-                # Show all tasks across inbox
                 all_tasks = []
                 for e in emails:
                     if e.get('actionItems'):
@@ -102,11 +95,9 @@ def process_chat_query(
             result['success'] = True
             return result
         
-        # Route 4: Filter by category/urgency (only trigger on explicit show/list requests)
         show_keywords = ['show', 'list', 'get', 'find', 'display', 'give me', 'get me']
         category_keywords = ['urgent', 'important', 'spam', 'newsletter']
         
-        # Check if query is asking to SHOW/LIST emails (not asking questions ABOUT them)
         is_list_request = any(show in query_lower for show in show_keywords) and any(cat in query_lower for cat in category_keywords)
         
         if is_list_request:
@@ -139,7 +130,6 @@ def process_chat_query(
             result['success'] = True
             return result
         
-        # Route 5: General query - use LLM
         response = _handle_general_query(query, email, emails, llm_service)
         result['response'] = response
         result['success'] = True
@@ -175,19 +165,16 @@ def _generate_draft(
 ) -> Dict[str, Any]:
     """Generate a draft reply to an email"""
     
-    # Get auto-reply prompt
     auto_reply_prompt = ""
     if prompts and 'autoReply' in prompts:
         auto_reply_prompt = prompts['autoReply'].get('prompt', '')
     
-    # Build context
     email_context = f"""Original Email:
 From: {email.get('senderName', 'Unknown')} <{email.get('sender', '')}>
 Subject: {email.get('subject', 'No subject')}
 
 {email.get('body', '')}"""
     
-    # Build prompt
     full_prompt = f"""{auto_reply_prompt if auto_reply_prompt else 'Draft a professional and helpful reply to this email.'}
 
 {email_context}
@@ -215,7 +202,6 @@ Subject: [subject line]
             'metadata': {}
         }
     
-    # Parse response to extract subject and body
     subject = f"Re: {email.get('subject', 'No subject')}"
     body = response
     

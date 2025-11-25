@@ -55,7 +55,7 @@ class GeminiService:
             except Exception as e:
                 print(f"Attempt {attempt + 1}/{max_retries} failed: {e}")
                 if attempt < max_retries - 1:
-                    time.sleep(2 ** attempt)  # Exponential backoff
+                    time.sleep(2 ** attempt)
                 else:
                     print("All retry attempts failed. Returning None.")
                     return None
@@ -81,7 +81,6 @@ class GeminiService:
         if not response_text:
             return []
         
-        # Clean up response (remove code block markers)
         response_text = response_text.strip()
         response_text = response_text.replace('```json', '').replace('```', '').strip()
         
@@ -97,9 +96,7 @@ class GeminiService:
         """Mock text generation for development without API key"""
         prompt_lower = prompt.lower()
         
-        # Check if this is a categorization request
         if 'categorize' in prompt_lower or 'category' in prompt_lower:
-            # Extract the email section (after "Email:" or "email:")
             email_section = ''
             if 'email:' in prompt_lower:
                 email_section = prompt[prompt_lower.find('email:'):]
@@ -108,10 +105,7 @@ class GeminiService:
             
             email_lower = email_section.lower()
             
-            # Apply categorization rules based on email content only
-            # Check for Important: URGENT or CEO in subject, or from sarah@company.com
             if 'urgent' in email_lower and 'subject:' in email_lower:
-                # Check if URGENT is in the subject line specifically
                 subject_start = email_lower.find('subject:')
                 subject_end = email_lower.find('\n', subject_start)
                 subject_line = email_lower[subject_start:subject_end] if subject_end > 0 else email_lower[subject_start:]
@@ -121,7 +115,6 @@ class GeminiService:
             if 'sarah@company.com' in email_lower:
                 return 'Important'
             
-            # Check for Newsletter: newsletter, weekly, or update
             if 'newsletter' in email_lower or 'weekly' in email_lower or 'week in' in email_lower:
                 return 'Newsletter'
             if 'update' in email_lower and 'subject:' in email_lower:
@@ -131,13 +124,11 @@ class GeminiService:
                 if 'update' in subject_line:
                     return 'Newsletter'
             
-            # Check for Spam: sale, discount, or limited
             if 'sale' in email_lower or 'discount' in email_lower or 'limited' in email_lower:
                 return 'Spam'
             if '70%' in email_section or 'off everything' in email_lower:
                 return 'Spam'
             
-            # Everything else is To-Do
             return 'To-Do'
         
         return 'Uncategorized'
@@ -146,12 +137,10 @@ class GeminiService:
         """Mock JSON generation for development without API key - supports batch processing"""
         prompt_lower = prompt.lower()
         
-        # Detect batch categorization request (multiple "Email ID:" markers)
         if 'categorize' in prompt_lower and prompt.count('Email ID:') > 1:
             print(f"🔧 Mock: Detected batch categorization request")
             results = []
             
-            # Extract all email IDs and their content
             import re
             email_sections = prompt.split('---')
             
@@ -159,7 +148,6 @@ class GeminiService:
                 if 'Email ID:' not in section:
                     continue
                 
-                # Extract email ID
                 id_match = re.search(r'Email ID:\s*(\S+)', section)
                 if not id_match:
                     continue
@@ -167,8 +155,7 @@ class GeminiService:
                 email_id = id_match.group(1)
                 section_lower = section.lower()
                 
-                # Apply categorization rules (same as _mock_generate_text)
-                category = 'To-Do'  # Default
+                category = 'To-Do'
                 
                 if 'urgent' in section_lower or 'ceo' in section_lower:
                     if 'subject:' in section_lower:
@@ -204,20 +191,17 @@ class GeminiService:
             print(f"🔧 Mock: Returning {len(results)} categorized emails")
             return results
         
-        # Detect batch action extraction request
         if 'action' in prompt_lower and 'extract' in prompt_lower and prompt.count('Email ID:') > 1:
             print(f"🔧 Mock: Detected batch action extraction request")
             results = []
             
-            # Extract all email IDs
             import re
             email_sections = prompt.split('---')
             
             for section in email_sections:
                 if 'Email ID:' not in section:
                     continue
-                
-                # Extract email ID
+
                 id_match = re.search(r'Email ID:\s*(\S+)', section)
                 if not id_match:
                     continue
@@ -225,7 +209,6 @@ class GeminiService:
                 email_id = id_match.group(1)
                 section_lower = section.lower()
                 
-                # Generate action items based on content
                 action_items = []
                 
                 if 'meeting' in section_lower:
@@ -255,7 +238,6 @@ class GeminiService:
             print(f"🔧 Mock: Returning action items for {len(results)} emails")
             return results
         
-        # Single email action extraction (legacy support)
         if 'meeting' in prompt_lower:
             return [
                 {
@@ -304,7 +286,6 @@ def parse_category(response: str) -> str:
     
     response = response.strip()
     
-    # Check for valid categories (case-insensitive)
     categories = ['Important', 'Newsletter', 'Spam', 'To-Do']
     for category in categories:
         if category.lower() in response.lower():

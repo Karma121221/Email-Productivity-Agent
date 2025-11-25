@@ -1,32 +1,24 @@
-// Zustand store for global state management of emails, prompts, drafts, and UI state
-
 import { create } from 'zustand';
 
 const useStore = create((set) => ({
-  // Email state
   emails: [],
   selectedEmail: null,
   isLoadingEmails: false,
   isProcessingEmails: false,
 
-  // Prompts state (full objects with name, description, prompt)
   prompts: {
     categorization: { name: '', description: '', prompt: '' },
     actionExtraction: { name: '', description: '', prompt: '' },
     autoReply: { name: '', description: '', prompt: '' },
   },
 
-  // Drafts state
   drafts: [],
 
-  // Chat state
   chatMessages: [],
   isChatLoading: false,
 
-  // UI state
   activeTab: 'inbox',
 
-  // Email actions
   setEmails: (emails) => set({ emails }),
   setSelectedEmail: (email) => set({ selectedEmail: email }),
   setIsLoadingEmails: (isLoading) => set({ isLoadingEmails: isLoading }),
@@ -46,14 +38,12 @@ const useStore = create((set) => ({
       ),
     })),
 
-  // Prompts actions
   setPrompts: (prompts) => set({ prompts }),
   updatePrompt: (promptType, promptText) =>
     set((state) => ({
       prompts: { ...state.prompts, [promptType]: promptText },
     })),
 
-  // Drafts actions
   setDrafts: (drafts) => set({ drafts }),
   
   addDraft: (draft) =>
@@ -73,7 +63,6 @@ const useStore = create((set) => ({
       drafts: state.drafts.filter((draft) => draft.id !== draftId),
     })),
 
-  // Chat actions
   addChatMessage: (message) =>
     set((state) => ({
       chatMessages: [...state.chatMessages, message],
@@ -82,7 +71,6 @@ const useStore = create((set) => ({
   clearChatMessages: () => set({ chatMessages: [] }),
   setIsChatLoading: (isLoading) => set({ isChatLoading: isLoading }),
 
-  // UI actions
   setActiveTab: (tab) => set({ activeTab: tab }),
 }));
 

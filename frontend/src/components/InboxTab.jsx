@@ -28,7 +28,6 @@ export default function InboxTab() {
   const categories = ['Important', 'To-Do', 'Newsletter', 'Spam'];
 
   useEffect(() => {
-    // Only load emails if store is empty (avoid overwriting processed data)
     if (emails.length === 0) {
       loadEmails();
     }
@@ -79,11 +78,9 @@ export default function InboxTab() {
     setSelectedCategories([]);
   };
 
-  // Filtered emails based on search and category filters
   const filteredEmails = useMemo(() => {
     let filtered = emails;
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(email => 
@@ -94,7 +91,6 @@ export default function InboxTab() {
       );
     }
 
-    // Filter by selected categories
     if (selectedCategories.length > 0) {
       filtered = filtered.filter(email => 
         selectedCategories.includes(email.category)
@@ -109,7 +105,6 @@ export default function InboxTab() {
   return (
     <TabsContent value="inbox" className="mt-0">
       <div className="flex gap-6 h-[calc(100vh-12rem)]">
-        {/* Email List */}
         <div className={cn(
           "border-r pr-6 overflow-auto transition-all duration-300 ease-in-out",
           selectedEmail ? "w-2/5" : "w-full"
