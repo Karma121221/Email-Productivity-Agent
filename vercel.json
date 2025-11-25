@@ -1,7 +1,11 @@
 {
+<<<<<<< HEAD
   "buildCommand": "cd frontend && pnpm install && pnpm run build",
   "outputDirectory": "frontend/dist",
   "installCommand": "pnpm install --prefix frontend",
+=======
+  "version": 2,
+>>>>>>> cfd630851e51d6463d54f4e7b2fa54a91964b8e0
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -11,5 +15,11 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
+<<<<<<< HEAD
   ]
+=======
+  ],
+  "installCommand": "cd frontend && pnpm install",
+  "buildCommand": "cd frontend && pnpm run build && mkdir -p ../public && cp -r dist/* ../public/"
+>>>>>>> cfd630851e51d6463d54f4e7b2fa54a91964b8e0
 }
