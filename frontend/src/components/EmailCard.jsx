@@ -1,5 +1,3 @@
-// Displays individual email item in the inbox list as a card
-
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ClipboardList } from 'lucide-react';

@@ -1,5 +1,3 @@
-// Main layout wrapper component with header and tab navigation
-
 import Header from './Header';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 

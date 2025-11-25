@@ -1,5 +1,3 @@
-// Main application header with branding and primary actions
-
 import { Button } from '@/components/ui/button';
 import { Waves, Loader2 } from 'lucide-react';
 

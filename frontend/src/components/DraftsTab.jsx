@@ -1,5 +1,3 @@
-// Drafts management tab with editor
-
 import { useState, useEffect } from 'react';
 import { TabsContent } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';

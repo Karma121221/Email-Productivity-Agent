@@ -1,5 +1,3 @@
-// Chat tab with AI email agent interface
-
 import { useState, useEffect, useRef } from 'react';
 import { TabsContent } from '@/components/ui/tabs';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
@@ -38,14 +36,12 @@ export default function ChatTab() {
     scrollToBottom();
   }, [chatMessages]);
 
-  // Check for auto-send query on mount
   useEffect(() => {
     const autoQuery = sessionStorage.getItem('autoSendQuery');
     if (autoQuery && !hasAutoSent.current) {
       sessionStorage.removeItem('autoSendQuery');
       hasAutoSent.current = true;
       setInput(autoQuery);
-      // Auto-send after a brief delay to show the input
       setTimeout(() => {
         sendQuery(autoQuery);
       }, 100);
@@ -89,7 +85,6 @@ export default function ChatTab() {
         };
         addChatMessage(assistantMessage);
 
-        // If a draft was generated, add it to drafts
         if (data.draft) {
           addDraft(data.draft);
           toast.success('Draft saved', {

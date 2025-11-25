@@ -1,5 +1,3 @@
-// Inbox tab with email list and detail view
-
 import { useEffect, useState, useMemo } from 'react';
 import { TabsContent } from '@/components/ui/tabs';
 import { Skeleton } from '@/components/ui/skeleton';
