@@ -8,3 +8,6 @@ __pycache__
 venv
 .vercel
 *.log
+
+# Ignore local Note-Taking App folder
+Note-Taking App/
