@@ -11,21 +11,22 @@ CORS(app)
 DATA_DIR = os.path.join(os.path.dirname(__file__), 'data')
 DRAFTS_FILE = os.path.join(DATA_DIR, 'drafts.json')
 
-@app.route('/api/hello')
+@app.route('/')
+@app.route('/hello')
 def hello():
     return jsonify({
         'message': 'Hello from Ocean AI Backend!',
         'status': 'success'
     })
 
-@app.route('/api/status')
+@app.route('/status')
 def status():
     return jsonify({
         'status': 'online',
         'version': '1.0.0'
     })
 
-@app.route('/api/data/default_prompts.json')
+@app.route('/data/default_prompts.json')
 def get_default_prompts():
     try:
         with open(os.path.join(DATA_DIR, 'default_prompts.json'), 'r', encoding='utf-8') as f:
@@ -34,7 +35,7 @@ def get_default_prompts():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/data/mock_inbox.json')
+@app.route('/data/mock_inbox.json')
 def get_mock_inbox():
     try:
         with open(os.path.join(DATA_DIR, 'mock_inbox.json'), 'r', encoding='utf-8') as f:
@@ -43,7 +44,7 @@ def get_mock_inbox():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/api/emails/load')
+@app.route('/emails/load')
 def load_emails():
     try:
         with open(os.path.join(DATA_DIR, 'mock_inbox.json'), 'r', encoding='utf-8') as f:
@@ -56,7 +57,7 @@ def load_emails():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/api/emails/process', methods=['POST'])
+@app.route('/emails/process', methods=['POST'])
 def process_emails():
     """
     Process emails with LLM categorization and action extraction
@@ -93,7 +94,7 @@ def process_emails():
             'error': str(e)
         }), 500
 
-@app.route('/api/chat/query', methods=['POST'])
+@app.route('/chat/query', methods=['POST'])
 def chat_query():
     """
     Process a chat query from the user
@@ -137,7 +138,7 @@ def chat_query():
             'response': 'An error occurred processing your request.'
         }), 500
 
-@app.route('/api/drafts', methods=['GET'])
+@app.route('/drafts', methods=['GET'])
 def get_drafts():
     """Get all saved drafts"""
     try:
@@ -156,7 +157,7 @@ def get_drafts():
         print(f"Error loading drafts: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/api/drafts', methods=['POST'])
+@app.route('/drafts', methods=['POST'])
 def save_draft():
     """Save a new draft or update existing"""
     try:
@@ -176,7 +177,7 @@ def save_draft():
         print(f"Error saving draft: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/api/drafts/<draft_id>', methods=['DELETE'])
+@app.route('/drafts/<draft_id>', methods=['DELETE'])
 def delete_draft(draft_id):
     """Delete a specific draft"""
     try:
