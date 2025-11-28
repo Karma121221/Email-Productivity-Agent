@@ -46,22 +46,22 @@ class DraftRequest(BaseModel):
     timestamp: Optional[str] = None
 
 # Routes
-@app.get("/")
-@app.get("/hello")
+@app.get("/api/")
+@app.get("/api/hello")
 async def hello():
     return {
         'message': 'Hello from Ocean AI Backend!',
         'status': 'success'
     }
 
-@app.get("/status")
+@app.get("/api/status")
 async def status():
     return {
         'status': 'online',
         'version': '1.0.0'
     }
 
-@app.get("/data/default_prompts.json")
+@app.get("/api/data/default_prompts.json")
 async def get_default_prompts():
     try:
         with open(os.path.join(DATA_DIR, 'default_prompts.json'), 'r', encoding='utf-8') as f:
@@ -70,7 +70,7 @@ async def get_default_prompts():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/data/mock_inbox.json")
+@app.get("/api/data/mock_inbox.json")
 async def get_mock_inbox():
     try:
         with open(os.path.join(DATA_DIR, 'mock_inbox.json'), 'r', encoding='utf-8') as f:
@@ -79,7 +79,7 @@ async def get_mock_inbox():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/emails/load")
+@app.get("/api/emails/load")
 async def load_emails():
     try:
         with open(os.path.join(DATA_DIR, 'mock_inbox.json'), 'r', encoding='utf-8') as f:
@@ -92,7 +92,7 @@ async def load_emails():
     except Exception as e:
         raise HTTPException(status_code=500, detail={'success': False, 'error': str(e)})
 
-@app.post("/emails/process")
+@app.post("/api/emails/process")
 async def process_emails(request: EmailProcessRequest):
     """
     Process emails with LLM categorization and action extraction
@@ -111,7 +111,7 @@ async def process_emails(request: EmailProcessRequest):
             'error': str(e)
         })
 
-@app.post("/chat/query")
+@app.post("/api/chat/query")
 async def chat_query(request: ChatQueryRequest):
     """
     Process a chat query from the user
@@ -145,7 +145,7 @@ async def chat_query(request: ChatQueryRequest):
             'response': 'An error occurred processing your request.'
         })
 
-@app.get("/drafts")
+@app.get("/api/drafts")
 async def get_drafts():
     """Get all saved drafts"""
     try:
@@ -164,7 +164,7 @@ async def get_drafts():
         print(f"Error loading drafts: {e}")
         raise HTTPException(status_code=500, detail={'success': False, 'error': str(e)})
 
-@app.post("/drafts")
+@app.post("/api/drafts")
 async def save_draft(draft: DraftRequest):
     """Save a new draft or update existing"""
     try:
@@ -180,7 +180,7 @@ async def save_draft(draft: DraftRequest):
         print(f"Error saving draft: {e}")
         raise HTTPException(status_code=500, detail={'success': False, 'error': str(e)})
 
-@app.delete("/drafts/{draft_id}")
+@app.delete("/api/drafts/{draft_id}")
 async def delete_draft(draft_id: str):
     """Delete a specific draft"""
     try:
