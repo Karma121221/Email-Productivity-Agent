@@ -4,7 +4,6 @@ from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
 import json
 import os
-from mangum import Mangum
 
 # Import services with absolute imports for Vercel compatibility
 import sys
@@ -221,6 +220,3 @@ def _save_draft(draft):
     
     with open(DRAFTS_FILE, 'w', encoding='utf-8') as f:
         json.dump(drafts, f, indent=2)
-
-# Vercel handler
-handler = Mangum(app)
