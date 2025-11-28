@@ -41,6 +41,7 @@ def process_chat_query(
     
     try:
         draft_keywords = ['draft', 'reply', 'respond', 'write back', 'compose', 'generate reply']
+        
         if any(keyword in query_lower for keyword in draft_keywords):
             if not email:
                 result['response'] = "Please select an email first to draft a reply."

@@ -1,15 +1,14 @@
 [
   {
-    "body": "Dear MegaSale Store,\n\nThank you for the notification about your limited-time 70% off sale.\n\nCould you please confirm the precise end time for this \"today only\" offer? Additionally, it would be helpful to know if there are any specific product categories or items excluded from this promotion.\n\nThank you for the clarification.\n\nSincerely,\n[Your Name]",
-    "createdAt": 1764067882.6253014,
-    "id": "draft-email-003-1764067882625",
+    "id": "draft-email-001-1764083614287",
+    "originalEmailId": "email-001",
+    "subject": "Re: Q4 Planning Meeting - Action Required",
+    "body": "Hi Sarah,\n\nThank you for organizing the Q4 planning meeting.\n\nI confirm my availability for Tuesday, November 26th at 2:00 PM. I have reviewed the attached agenda and will send through any additional items by end of day Friday, as requested.\n\nLooking forward to the discussion.\n\nBest regards,",
+    "createdAt": 1764083614.2879796,
     "metadata": {
-      "category": "Newsletter",
-      "originalSender": "MegaSale Store",
-      "originalSubject": "\ud83c\udf89 LIMITED TIME: 70% OFF EVERYTHING! Act Now!"
-    },
-    "originalEmailId": "email-003",
-    "subject": "Re: \ud83c\udf89 LIMITED TIME: 70% OFF EVERYTHING! Act Now!",
-    "updatedAt": 1764067905922
+      "originalSender": "Sarah Johnson",
+      "originalSubject": "Q4 Planning Meeting - Action Required",
+      "category": "To-Do"
+    }
   }
 ]

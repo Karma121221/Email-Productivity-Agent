@@ -17,7 +17,6 @@ ENV/
 
 # Node
 node_modules/
-.pnpm-store/
 
 # Build artifacts
 *.local
